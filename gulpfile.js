@@ -1,9 +1,9 @@
-var defaultTasks = ['watch'];
-
 var gulp = require('gulp');
+var del = require('del');
 var preprocess = require('gulp-preprocess');
 
 var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 var mmq = require('gulp-merge-media-queries');
 var nanocss = require('gulp-cssnano');
@@ -11,11 +11,13 @@ var nanocss = require('gulp-cssnano');
 var eslint = require('gulp-eslint');
 var uglify = require('gulp-uglify');
 
+var jsonminify = require('gulp-jsonminify');
+
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var notify = require("gulp-notify");
 
-gulp.task('html', ['css', 'js'], function() {
+gulp.task('html', ['css', 'js', 'data'], function() {
   return compileHTML();
 });
 gulp.task('css', function() {
@@ -23,6 +25,9 @@ gulp.task('css', function() {
 });
 gulp.task('js', function() {
   return compileJS();
+});
+gulp.task('data', function() {
+  return compileData();
 });
 
 
@@ -36,19 +41,21 @@ function compileHTML() {
 
 
 function compileCSS() {
-  return gulp.src('dev/assets/css/main.scss')
+  return gulp.src('dev/assets/scss/main.scss')
     .pipe(plumber({
         errorHandler: function (err) {
             console.log(err);
             this.emit('end');
         }
     }))
+    .pipe(sourcemaps.init())
     .pipe(sass({
         outputStyle: 'expanded'
     }))
     .pipe( mmq({
         log: true
     }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/assets/css'))
     .pipe(rename({ suffix: '.min' }))
     .pipe(nanocss())
@@ -75,18 +82,25 @@ function compileJS() {
     .pipe(gulp.dest('build/assets/js/'))
 }
 
+function compileData() {
+  return gulp.src('dev/assets/data/features.geojson')
+    .pipe(jsonminify())
+    .pipe(gulp.dest('build/assets/data'))
+}
+
 
 
 // Watch
 
-gulp.task('watch', ['html', 'css', 'js'], watchTask);
-gulp.task('default', defaultTasks);
+gulp.task('watch', ['html', 'css', 'js', 'data'], watchTask);
+gulp.task('default', ['watch']);
 
 function watchTask(error) {
     handleError(error);
     watchHTML();
     watchCSS();
     watchJS();
+    watchData();
 }
 
 
@@ -103,6 +117,10 @@ function watchCSS(error) {
 function watchJS(error) {
     handleError(error);
     gulp.watch(['dev/assets/js/main.js'], ['html']);
+}
+function watchData(error) {
+  handleError(error);
+  gulp.watch(['dev/assets/data/features.geojson'], ['html']);
 }
 
 
