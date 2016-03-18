@@ -1,0 +1,84 @@
+// ==================================================
+// Mixins
+// ==================================================
+
+
+// Media Queries
+// ==================================================
+
+$breakpoints: (
+  'desktop': 1025px,
+  'tablet': 769px,
+  'smalltablet': 500px
+);
+
+@mixin media-query($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value != null {
+    @media all and (min-width: $value) {
+      @content;
+    }
+  }
+
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
+  }
+
+}
+
+
+// z-index
+// ==================================================
+
+$z-index: (
+  "nav": 15,
+  "map-mobile": 10
+);
+
+
+@function z-index($key) {
+  @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+  z-index: z-index($key);
+}
+
+
+
+
+// Extends
+// ==================================================
+
+
+// Table positioning
+.table {
+  display: table;
+}
+  .table-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+// Hide and show
+.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.reveal {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+// Typography
+.paragraphs {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  @include media-query("smalltablet") {
+    font-size: 1.8rem;
+  }
+}

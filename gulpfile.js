@@ -17,6 +17,11 @@ var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var notify = require("gulp-notify");
 
+
+gulp.task('clean', function() {
+  return del('build');
+});
+
 gulp.task('html', ['css', 'js', 'data'], function() {
   return compileHTML();
 });
@@ -36,7 +41,8 @@ function compileHTML() {
   var returnObj = gulp.src('dev/index.html')
     .pipe(preprocess())
     .on('error', watchTask ) // restart watch task on error
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest('build/'))
+    .pipe(notify('Compiled!'));
 }
 
 
@@ -95,6 +101,8 @@ function compileData() {
 gulp.task('watch', ['html', 'css', 'js', 'data'], watchTask);
 gulp.task('default', ['watch']);
 
+
+
 function watchTask(error) {
     handleError(error);
     watchHTML();
@@ -126,7 +134,7 @@ function watchData(error) {
 
 function handleError(error) {
     var message = error;
-    if (typeof error === 'function' ) return;
-    if (typeof error === 'object' && error.hasOwnProperty('message')) message = error.message;
-    if (message !== undefined) console.log('Error: ' + message);
+    if (typeof error === 'function' ) { return; }
+    if (typeof error === 'object' && error.hasOwnProperty('message')) { message = error.message; }
+    if (message !== undefined) { console.log('Error: ' + message); }
 }

@@ -1,0 +1,29 @@
+.map-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: $primary;
+  padding: 5px 10px;
+  @include z-index("nav");
+}
+  .map-nav-logo-link {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+    .map-nav-logo-img {
+      display: block;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+    }
+  .map-nav-title-block {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -7.5px;
+    text-align: center;
+  }

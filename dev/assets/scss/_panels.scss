@@ -1,11 +1,27 @@
 .panels {
-  position: absolute;
+  position: relative;
+  top: 200px;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  margin-bottom: 200px;
+  overflow: auto;
+
+  &--hidden {
+    top: 100%;
+  }
 }
+
+
 
 .panel {
   display: block;
-  width: 100px;
+  width: 100%;
   height: 400px;
   background: red;
   margin-bottom: 20px;
 }
+
+  .panel--active {
+    background: blue;
+  }

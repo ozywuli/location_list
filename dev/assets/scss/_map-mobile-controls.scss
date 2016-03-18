@@ -1,0 +1,23 @@
+.map-mobile-controls {
+  position: fixed;
+  top: 180px;
+  right: 0;
+  left: 0;
+  background: $primary;
+  text-align: center;
+
+  @include z-index("nav");
+
+  &--compressed {
+    top: auto;
+    bottom: 0;
+  }
+}
+
+  .map-toggle {
+    display: inline-block;
+    padding: 10px;
+  }
+    .map-toggle-expand-text {
+
+    }

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
   <title>Feel of China - Los Angeles</title>
 
   <link rel="stylesheet" href="assets/css/main.css">
@@ -9,27 +11,36 @@
 </head>
 <body>
 
-<div class="map-container">
+<!-- Nav -->
+<div class="map-nav">
+  <a href="http://henkubao.com" class="map-nav-logo-link"><img src="http://placehold.it/100x100" alt="Henkubao logo" class="map-nav-logo-img"></a>
+  <div class="map-nav-title-block">
+    <h1 class="map-nav-title">FEEL OF CHINA</h1>
+  </div>
+</div>
+
+<!-- Map -->
+<div class="map-container map-container--compressed">
   <div id="map" class="map"></div>
 </div>
 
+<!-- Mobile Controls -->
 
-
-<div class="panels">
-  <ul class="panels-container">
-    <div class="panel" id="panel-1"></div>
-    <div class="panel" id="panel-2"></div>
-    <div class="panel" id="panel-3"></div>
-    <div class="panel" id="panel-4"></div>
-    <div class="panel" id="panel-5"></div>
-    <div class="panel" id="panel-6"></div>
-    <div class="panel" id="panel-7"></div>
-    <div class="panel" id="panel-8"></div>
-  </ul>
+<div class="map-mobile-controls">
+  <a href="#" class="map-toggle">
+    <span class="hide">Map Toggles</span>
+    <span class="map-toggle-expand-map">Expand Map</span>
+    <span class="map-toggle-expand-text hide">Expand Text</span>
+  </a>
 </div>
 
+<!-- Panels -->
+<ul class="panels">
+  <li class="panel panel--active">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt iure tempore corporis quis veritatis voluptate provident aliquam, quod ea dolores vitae esse saepe quaerat asperiores, distinctio ipsum id facere numquam.</li>
+</ul>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTp-5F5KiN3DF4ky93u0XYdAEtytJDBDE &callback=initMap"
       async defer></script>
