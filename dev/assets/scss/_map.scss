@@ -7,8 +7,9 @@
   width: 100%;
   height: 100%;
 
-
-  @include z-index('map-mobile');
+  @media all and (max-width: $tablet) {
+    @include z-index('map-mobile');
+  }
 
   &--compressed {
     height: 180px;

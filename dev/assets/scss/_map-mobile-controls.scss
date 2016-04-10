@@ -8,6 +8,10 @@
 
   @include z-index("nav");
 
+  @include media-query('tablet') {
+    display: none;
+  }
+
   &--compressed {
     top: auto;
     bottom: 0;

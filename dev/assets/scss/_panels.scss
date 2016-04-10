@@ -7,6 +7,11 @@
   margin-bottom: 200px;
   overflow: auto;
 
+  @include media-query('tablet') {
+    top: 50px;
+    max-width: 300px;
+  }
+
   &--hidden {
     top: 100%;
   }
