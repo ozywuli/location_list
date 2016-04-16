@@ -17,6 +17,12 @@ var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var notify = require("gulp-notify");
 
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var babelify = require('babelify');
+var gutil = require('gulp-util');
 
 gulp.task('clean', function() {
   return del('build');
@@ -69,14 +75,45 @@ function compileCSS() {
 }
 
 
-function compileJS() {
-  return gulp.src('dev/assets/js/main.js')
+function compileJS(watch) {
+
+  var bundler = watchify(browserify('./dev/assets/js/main.js', {
+    debug: true,
+    extensions: [' ', 'js', 'jsx']
+  }).transform(babelify.configure({
+      presets: ["es2015"]
+    }))
+  );
+
+  function rebundle() {
+    bundler.bundle()
+      .on('error', function(err) {
+        console.error(err);
+        this.emit('end'); }
+      )
+      .pipe(source('main.js'))    
+      .pipe(buffer())
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./build/assets/js/'));
+  }
+
+  if (watch) {
+    bundler.on('update', function() {
+      console.log('-> bundling...');
+      rebundle();
+    });
+  }
+
+  rebundle();
+
+/*  return gulp.src('dev/assets/js/main.js')
     .pipe(eslint({
     'rules':{
         'quotes': [1, 'single'],
         'semi': [1, 'always']
     }
-  }))
+    }))
     .pipe(eslint.format())
     .pipe(eslint.result(function (result) {
         // Called for each ESLint result.
@@ -85,7 +122,7 @@ function compileJS() {
         console.log('# Warnings: ' + result.warningCount);
         console.log('# Errors: ' + result.errorCount);
     }))
-    .pipe(gulp.dest('build/assets/js/'))
+    .pipe(gulp.dest('build/assets/js/'))*/
 }
 
 function compileData() {
@@ -124,7 +161,7 @@ function watchCSS(error) {
 
 function watchJS(error) {
     handleError(error);
-    gulp.watch(['dev/assets/js/main.js'], ['html']);
+    return compileJS(true);
 }
 function watchData(error) {
   handleError(error);
