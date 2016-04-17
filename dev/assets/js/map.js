@@ -36,6 +36,7 @@ module.exports = function() {
           position: latLng,
           title: 'test',
           id: id,
+          icon: "http://placehold.it/50x50"
         });
 
         markers.push(marker[i]);
@@ -50,10 +51,15 @@ module.exports = function() {
           map.panTo(this.position);
           var activeMarker = this.id;
           var panelHeight = $('.panel').height();
-          console.log(panelHeight);
+          
+          for (var i = 0; i < markers.length; i++) {
+            markers[i].setIcon('http://placehold.it/50x50');
+          }
+          this.setIcon('http://placehold.it/100x100')
+
           $('html, body').animate({
             scrollTop: $('[data-id="' + activeMarker + '"]').offset().top - (panelHeight / 2),
-          });
+          }, 150);
         });
 
 
