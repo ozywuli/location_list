@@ -64,8 +64,13 @@ module.exports = function () {
         $('.panels').append('<li class="panel panel__location" data-id="' + markerId + '"></li>');
 
         marker[i].addListener('click', function (e) {
-          console.log(this.id);
           map.panTo(this.position);
+          var activeMarker = this.id;
+          var panelHeight = $('.panel').height();
+          console.log(panelHeight);
+          $('html, body').animate({
+            scrollTop: $('[data-id="' + activeMarker + '"]').offset().top - panelHeight / 2
+          });
         });
       } // end for loop
     }).done(function () {
@@ -81,7 +86,6 @@ module.exports = function () {
     var currentId = '';
 
     function setId(newId) {
-      console.log(markers);
 
       if (newId === currentId) {
         return;
@@ -91,7 +95,6 @@ module.exports = function () {
 
         if (panels.eq(i).attr('data-id') === newId) {
           panels.eq(i).addClass('panel--active');
-          console.log(markers[i].position);
           map.panTo(markers[i].position);
         } else {
           panels.eq(i).removeClass('panel--active');
@@ -118,7 +121,7 @@ module.exports = function () {
       }
 
       setId(newId);
-    }, 250);
+    }, 150);
 
     $(window).on('scroll', function (e) {
       panDebounce();
