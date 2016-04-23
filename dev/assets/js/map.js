@@ -2,6 +2,31 @@ var _debounce = require('lodash/debounce');
 
 module.exports = function() {
 
+  var deviceState;
+  var newDeviceState;
+
+  function getDeviceState() {
+    deviceState = window.getComputedStyle(document.querySelector('.state-indicator'), ':before').getPropertyValue('content');
+
+    // return state;
+    return deviceState;
+  }
+
+  getDeviceState();
+  var lastDeviceState = getDeviceState();
+
+  window.addEventListener('resize', function() {
+    newDeviceState = getDeviceState();
+
+    if (newDeviceState !== lastDeviceState) {
+      lastDeviceState = deviceState;
+    }
+
+    console.log(lastDeviceState);
+  });
+
+
+
   // Variable declaration
 
   // Initiliaze map

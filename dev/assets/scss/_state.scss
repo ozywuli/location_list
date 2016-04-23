@@ -1,0 +1,14 @@
+.state-indicator {
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    display: none;
+}
+
+@each $breakpoint, $width in $breakpoints {
+    @media all and (min-width: #{$width}) {
+        .state-indicator:before {
+            content: $breakpoint;
+        }
+    }
+}
