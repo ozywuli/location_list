@@ -50,6 +50,8 @@ module.exports = function () {
   var markers = [];
   var marker = [];
 
+  var panelHeight;
+
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 34.049652, lng: -118.235157 },
@@ -86,10 +88,11 @@ module.exports = function () {
         // Create and place corresponding panels in a scrollable sidebar
         $('.panels').append('<li class="panel panel__location" data-id="' + markerId + '"></li>');
 
+        panelHeight = $('.panel').height();
+
         marker[i].addListener('click', function (e) {
           map.panTo(this.position);
           var activeMarker = this.id;
-          var panelHeight = $('.panel').height();
 
           for (var i = 0; i < markers.length; i++) {
             markers[i].setIcon('http://placehold.it/50x50');
@@ -106,6 +109,15 @@ module.exports = function () {
     });
   }
   initMap();
+
+  $('.nav__list-link').on('click', function (e) {
+    e.preventDefault();
+    var navListID = $(this).attr('data-id');
+
+    $('html, body').animate({
+      scrollTop: $('.panel__location[data-id="' + navListID + '"]').offset().top - panelHeight / 2
+    }, 150);
+  });
 
   function windowScroll() {
 
