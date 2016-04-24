@@ -21,7 +21,6 @@ module.exports = function() {
     if (newDeviceState !== lastDeviceState) {
       lastDeviceState = deviceState;
     }
-
     console.log(lastDeviceState);
   });
 
