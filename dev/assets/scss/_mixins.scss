@@ -7,9 +7,9 @@
 // ==================================================
 
 $breakpoints: (
-  'desktop': 1025px,
+  'smalltablet': 500px,
   'tablet': 769px,
-  'smalltablet': 500px
+  'desktop': 1025px
 );
 
 @mixin media-query($breakpoint) {

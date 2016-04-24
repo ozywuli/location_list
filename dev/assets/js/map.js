@@ -79,7 +79,7 @@ module.exports = function() {
           for (var i = 0; i < markers.length; i++) {
             markers[i].setIcon('http://placehold.it/50x50');
           }
-          this.setIcon('http://placehold.it/100x100')
+          this.setIcon('http://placehold.it/100x100');
 
           $('html, body').animate({
             scrollTop: $('[data-id="' + activeMarker + '"]').offset().top - (panelHeight / 2),
@@ -116,19 +116,26 @@ module.exports = function() {
       if (newId === currentId) {
         return;
       }
+
       // highlight the current section
       for (var i = 0; i < panels.length; i++) {
-
           if ( panels.eq(i).attr('data-id') === newId ) {
             panels.eq(i).addClass('panel--active');
             map.panTo(markers[i].position);
-
           } else {
             panels.eq(i).removeClass('panel--active');
           }
       }
 
       currentId = newId;
+
+      // Set highlighted marker
+      var activePanelIndex = $('.panel--active').index();
+
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setIcon('http://placehold.it/50x50');
+      }      
+      markers[activePanelIndex - 1].setIcon('http://placehold.it/100x100');
 
     };
 
@@ -147,8 +154,6 @@ module.exports = function() {
         if (thisPanelOffset.top >= 0 && thisPanelOffset.top >= scrolled) {
           newId = panels.eq(i).attr('data-id');
         }
-
-
 
       }
 

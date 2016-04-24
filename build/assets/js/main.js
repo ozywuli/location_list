@@ -118,9 +118,9 @@ module.exports = function () {
       if (newId === currentId) {
         return;
       }
+
       // highlight the current section
       for (var i = 0; i < panels.length; i++) {
-
         if (panels.eq(i).attr('data-id') === newId) {
           panels.eq(i).addClass('panel--active');
           map.panTo(markers[i].position);
@@ -130,6 +130,14 @@ module.exports = function () {
       }
 
       currentId = newId;
+
+      // Set highlighted marker
+      var activePanelIndex = $('.panel--active').index();
+
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setIcon('http://placehold.it/50x50');
+      }
+      markers[activePanelIndex - 1].setIcon('http://placehold.it/100x100');
     };
 
     var panDebounce = _debounce(function () {
